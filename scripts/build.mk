@@ -164,12 +164,6 @@ all: $(all-y)
 .PHONY: all
 
 #
-# List of object files.
-objlist:
-	$(E) $(obj-y) $(lib-y)
-.PHONY: objlist
-
-#
 # Clean everything up.
 clean:
 	$(call msg-clean, $(obj))
