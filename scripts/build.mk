@@ -65,6 +65,7 @@ ifneq ($(lib-y),)
         else
                 lib-target := $(obj)/lib.a
         endif
+        cleanup-y += $(call cleanify,$(lib-y))
         cleanup-y += $(lib-target)
         all-y += $(lib-target)
 endif
@@ -76,6 +77,7 @@ ifneq ($(obj-y),)
         else
                 builtin-target := $(obj)/built-in.o
         endif
+        cleanup-y += $(call cleanify,$(obj-y))
         cleanup-y += $(builtin-target)
         all-y += $(builtin-target)
 endif
@@ -124,6 +126,7 @@ define gen-custom-target-rule
                                 $(call objectify,$($(1)-obj-y))         \
                                 $(call objectify,$($(1)-obj-e))))
                 all-y += $(obj)/$(1).built-in.o
+                cleanup-y += $(call cleanify,$(call objectify,$($(1)-obj-y)))
                 cleanup-y += $(obj)/$(1).built-in.o
         endif
         ifneq ($($(1)-lib-y),)
@@ -135,6 +138,7 @@ define gen-custom-target-rule
                                 $(call objectify,$($(1)-lib-y)))        \
                                 $(call objectify,$($(1)-lib-e)))
                 all-y += $(obj)/$(1).lib.a
+                cleanup-y += $(call cleanify,$(call objectify,$($(1)-lib-y)))
                 cleanup-y += $(obj)/$(1).lib.a
         endif
 endef
@@ -182,7 +186,7 @@ all: $(all-y)
 # Clean everything up.
 clean:
 	$(call msg-clean, $(obj))
-	$(Q) $(RM) $(obj)/*.o $(obj)/*.d $(obj)/*.i $(obj)/*.s $(cleanup-y)
+	$(Q) $(RM) $(cleanup-y)
 .PHONY: clean
 
 #
