@@ -45,6 +45,9 @@ A typical source code tree will look like
 ----------
     Makefile        # toplevel Makefile
     <scripts>       # directory with nmk scripts
+    <include>       # directory with headers
+        src1.h
+        src2.h
     <src>           # source code directory
         Makefile    # secondlevel Makefile
         src1.c      # source code
@@ -52,11 +55,32 @@ A typical source code tree will look like
         ...
 ----------
 
-In toplevel 'Makefile' we should plug in *nmk* itself
+In toplevel 'Makefile' we should plug in *nmk* itself and write rules for
+linking the final program.
 
 ----------
     export __nmk_dir=scripts/
-    include $(__nmk_dir)include.mk
+
+    include $(__nmk_dir)/include.mk
+    include $(__nmk_dir)/macro.mk
+
+    CFLAGS  += -iquote include
+
+    PROGRAM := example
+
+    $(eval $(call gen-built-in,src))
+
+    $(PROGRAM): src/built-in.o
+    	$(Q) $(CC) -o $@ $^
+
+    clean:
+    	$(Q) $(MAKE) $(build)=src clean
+    	$(Q) $(RM) $(PROGRAM)
+
+    all: $(PROGRAM)
+    	@true
+
+    .DEFAULT_GOAL := all
 ----------
 
 In secondlevel 'Makefile' we should enumerate files to be compiled.
@@ -64,7 +88,6 @@ In secondlevel 'Makefile' we should enumerate files to be compiled.
 ----------
     obj-y   += src1.o
     obj-y   += src2.o
-    ...
 ----------
 
 That is basically all one need to build a program.
