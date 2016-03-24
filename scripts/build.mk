@@ -14,8 +14,8 @@ builtin-name	:=
 lib-name	:=
 ld_flags	:=
 cleanup-y	:=
-objdirs		:=
 mrproper-y	:=
+objdirs		:=
 libso-y	        :=
 
 MAKECMDGOALS := $(call uniq,$(MAKECMDGOALS))
@@ -270,12 +270,13 @@ all: $(all-y)
 .PHONY: all
 
 #
-# # Clean most files, but leave enough to navigate with tags (generated files)
+# Clean most files, but leave enough to navigate with tags (generated files)
 clean:
 	$(call msg-clean, $(obj))
 	$(Q) $(RM) $(cleanup-y)
 .PHONY: clean
 
+#
 # Delete all generated files
 mrproper: clean
 	$(Q) $(RM) $(mrproper-y)
