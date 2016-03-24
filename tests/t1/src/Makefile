@@ -1,4 +1,4 @@
-ccflags-y	+= -iquote include
+ccflags-y	+= -iquote include -fPIC
 
 CFLAGS_src1.o	+= -DONE
 
@@ -14,3 +14,6 @@ host-ccflags-y	+= -iquote include
 
 hostprogs-y	+= h1
 h1-objs		+= h1.o h2.o
+
+libso-y		+= some-lib
+some-lib-objs	+= src1.o src2.o
