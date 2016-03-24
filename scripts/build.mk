@@ -227,7 +227,7 @@ $(call objectify,$(1)).so:  $(call objectify,$($(1)-objs)) $(src-makefile)
 	$$(call msg-link, $$@)
 	$$(Q) $$(CC) -shared $$(ldflags-so) $$(LDFLAGS) $$(LDFLAGS_$$(@F)) -o $$@ $(call objectify,$($(1)-objs))
 all-y += $(call objectify,$(1)).so
-cleanup-y += $(call objectify,$($(1)-objs))
+cleanup-y += $(call objectify,$(1)).so
 endef
 $(foreach t,$(libso-y),$(eval $(call gen-so-link-rules,$(t))))
 
