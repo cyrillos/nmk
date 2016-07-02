@@ -50,6 +50,9 @@ export build
 build-as := -r -R -f $(__nmk_dir)main.mk makefile=$$(1) obj=$$(2)
 export build-as
 
+# A target for built-ins force pass.
+.PHONY: .FORCE
+
 #
 # Footer.
 $(__nmk_dir)scripts/include.mk:
