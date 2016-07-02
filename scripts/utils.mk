@@ -1,6 +1,20 @@
 ifndef ____nmk_defined__utils
 
 #
+# Generate versions.
+define gen-versions
+$(1)_VERSION_MAJOR	:= $(2)
+$(1)_VERSION_MINOR	:= $(3)
+$(1)_VERSION_SUBLEVEL	:= $(4)
+$(1)_VERSION_EXTRA	:= $(5)
+$(1)_VERSION_NAME	:= $(6)
+$(1)_VERSION		:= $($(1)_VERSION_MAJOR)$(if $($(1)_VERSION_MINOR),.$($(1)_VERSION_MINOR))$(if $($(1)_VERSION_SUBLEVEL),.$($(1)_VERSION_SUBLEVEL))$(if $($(1)_VERSION_EXTRA),.$($(1)_VERSION_EXTRA))
+
+export $(1)_VERSION_MAJOR $(1)_VERSION_MINOR $(1)_VERSION_SUBLEVEL
+export $(1)_VERSION_EXTRA $(1)_VERSION_NAME $(1)_VERSION
+endef
+
+#
 # Usage: option = $(call try-cc,source-to-build,cc-options,cc-defines)
 try-cc = $(shell sh -c                                                          \
                 'TMP="$(OUTPUT)$(TMPOUT).$$$$";                                 \
