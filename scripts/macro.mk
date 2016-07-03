@@ -12,7 +12,7 @@ endef
 # Helper to build built-in target in directory.
 # $(eval $(call gen-built-in,<dir>,<prerequsite>,<phony>))
 define gen-built-in
-$(1)/%: $(2)
+$(1)/%: $(2) .FORCE
 	$$(Q) $$(MAKE) $$(build)=$(1) $$@
 ifneq ($(3),)
 $(3): $(2)
