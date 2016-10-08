@@ -47,7 +47,7 @@ build := -r -R -f $(__nmk_dir)main.mk makefile=Makefile obj
 export build
 
 # With specified Makefile
-build-as := -r -R -f $(__nmk_dir)main.mk makefile=$$(1) obj=$$(2)
+build-as = -r -R -f $(__nmk_dir)main.mk makefile=$(1) obj=$(2)
 export build-as
 
 # A target for built-ins force pass.
@@ -55,7 +55,5 @@ export build-as
 
 #
 # Footer.
-$(__nmk_dir)scripts/include.mk:
-	@true
 ____nmk_defined__include = y
 endif
